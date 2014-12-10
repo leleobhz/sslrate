@@ -200,9 +200,8 @@ class CertificateScorer(Scorer):
 ### Process
 
 def process_report(path, hostname=None):
-  with open(path) as f:
-    data = f.read()
-  tree = ET.fromstring(data)
+  xmlfile = open(path,'r')
+  tree = ET.parse(xmlfile, parser=ET.XMLParser(huge_tree=True))
   error = tree.find('.//invalidTarget')
   if error is not None:
     return (error.text, None, error.attrib['error'])
